@@ -8,4 +8,5 @@ A tiny log library for android
 ### TODO
 1. save as Json format;
 2. save as Xml format;
-
+3. add thread name and thread id to content output;
+4. save log to customized file;

@@ -3,6 +3,9 @@ package com.androidwind.log;
 import android.text.TextUtils;
 import android.util.Log;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * @author ddnosh
  * @website http://blog.csdn.net/ddnosh
@@ -22,6 +25,22 @@ public class TinyLog {
             mLogConfig = new LogConfig();
         }
         return mLogConfig;
+    }
+
+    public static void v(String content) {
+        if (!mLogConfig.isEnable) return;
+        if (mLogConfig.isWritable) {
+            logFile(LOG_V, null, content, null);
+        }
+        logConsole(LOG_V, null, content, null);
+    }
+
+    public static void v(String tag, String content, Object... objects) {
+        if (!mLogConfig.isEnable) return;
+        if (mLogConfig.isWritable) {
+            logFile(LOG_V, tag, content, null, objects);
+        }
+        logConsole(LOG_V, tag, content, null, objects);
     }
 
     private static String generateTag(String tag) {
@@ -61,32 +80,59 @@ public class TinyLog {
         return "";
     }
 
-    public static void v(String content) {
-        if (!mLogConfig.isEnable) return;
-        log(LOG_V, null, content, null);
-    }
-
-    public static void v(String tag, String content, Object... objects) {
-        if (!mLogConfig.isEnable) return;
-        log(LOG_V, tag, content, null, objects);
-    }
-
-    public static void log(int logSupport, String tag, String content, Throwable tr, Object... args) {
+    public static void logConsole(int logSupport, String tag, String content, Throwable tr, Object... args) {
         switch (logSupport) {
             case LOG_V:
                 Log.v(generateTag(tag), generateContent(content, args), tr);
                 break;
             case LOG_D:
+                Log.d(generateTag(tag), generateContent(content, args), tr);
                 break;
             case LOG_I:
+                Log.i(generateTag(tag), generateContent(content, args), tr);
                 break;
             case LOG_W:
+                Log.w(generateTag(tag), generateContent(content, args), tr);
                 break;
             case LOG_E:
+                Log.e(generateTag(tag), generateContent(content, args), tr);
                 break;
             default:
                 Log.wtf(generateTag(tag), generateContent(content, args), tr);
                 break;
         }
+    }
+
+    public static void logFile(int logSupport, String tag, String content, Throwable tr, Object... args) {
+        SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+        String time = sf.format(new Date());
+        String level = "V";
+        switch (logSupport) {
+            case LOG_V:
+                level = "V";
+                break;
+            case LOG_D:
+                level = "D";
+                break;
+            case LOG_I:
+                level = "I";
+                break;
+            case LOG_W:
+                level = "W";
+                break;
+            case LOG_E:
+                level = "E";
+                break;
+            default:
+                level = "WTF";
+                break;
+        }
+        StackTraceElement caller = new Throwable().getStackTrace()[3];
+        //打印进程ID 线程ID 当前类 当前方法
+        String message = time + " " + level + " "
+                + "" + android.os.Process.myPid() + "|" + android.os.Process.myTid()
+                + " [" + caller.getClassName() + "->" + caller.getMethodName() + "]"
+                + " [" + generateTag(tag) + "]" + generateContent(content, args);
+        mLogConfig.saveToFile(message);
     }
 }
