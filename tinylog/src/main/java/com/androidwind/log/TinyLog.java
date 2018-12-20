@@ -1,120 +1,92 @@
 package com.androidwind.log;
 
+import android.text.TextUtils;
 import android.util.Log;
 
+/**
+ * @author ddnosh
+ * @website http://blog.csdn.net/ddnosh
+ */
 public class TinyLog {
-    private static boolean isEnable = true;
 
-    public static void init(boolean enable) {
-        isEnable = enable;
+    private static final int LOG_V = 0;
+    private static final int LOG_D = 1;
+    private static final int LOG_I = 2;
+    private static final int LOG_W = 3;
+    private static final int LOG_E = 4;
+
+    private static LogConfig mLogConfig;
+
+    public static LogConfig config() {
+        if (mLogConfig == null) {
+            mLogConfig = new LogConfig();
+        }
+        return mLogConfig;
     }
 
-    private static String generateTag() {
-        StackTraceElement caller = new Throwable().getStackTrace()[2];
-        String tag = "%s.%s(Line:%d)";
-        String callerClazzName = caller.getClassName();
-        callerClazzName = callerClazzName.substring(callerClazzName.lastIndexOf(".") + 1);
-        tag = String.format(tag, callerClazzName, caller.getMethodName(), caller.getLineNumber());
-        return tag;
+    private static String generateTag(String tag) {
+        if (!TextUtils.isEmpty(tag)) {
+            return tag;
+        } else {
+            StackTraceElement caller = new Throwable().getStackTrace()[3];
+            String callerClazzName = caller.getClassName();
+            callerClazzName = callerClazzName.substring(callerClazzName.lastIndexOf(".") + 1);
+            String result = "%s.%s.%d";
+            result = String.format(result, callerClazzName, caller.getMethodName(), caller.getLineNumber());
+            return result;
+        }
     }
 
-    public static void d(String content) {
-        if (!isEnable) return;
-        String tag = generateTag();
-
-        Log.d(tag, content);
+    private static String generateContent(String content, Object... objects) {
+        StackTraceElement caller = new Throwable().getStackTrace()[3];
+        String result = "(%s:%d) %s";
+        result = String.format(result, caller.getFileName(), caller.getLineNumber(), content + wrapperContent(objects));
+        return result;
     }
 
-    public static void d(String content, Throwable tr) {
-        if (!isEnable) return;
-        String tag = generateTag();
-
-        Log.d(tag, content, tr);
-    }
-
-    public static void e(String content) {
-        if (!isEnable) return;
-        String tag = generateTag();
-
-        Log.e(tag, content);
-    }
-
-    public static void e(String content, Throwable tr) {
-        if (!isEnable) return;
-        String tag = generateTag();
-
-        Log.e(tag, content, tr);
-    }
-
-    public static void i(String content) {
-        if (!isEnable) return;
-        String tag = generateTag();
-
-        Log.i(tag, content);
-    }
-
-    public static void i(String content, Throwable tr) {
-        if (!isEnable) return;
-        String tag = generateTag();
-
-        Log.i(tag, content, tr);
+    private static Object wrapperContent(Object... objects) {
+        if (objects.length > 0) {
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append("\n");
+            for (int i = 0; i < objects.length; i++) {
+                Object object = objects[i];
+                if (object == null) {
+                    stringBuilder.append("arg").append("[").append(i).append("]").append(" = ").append("null").append("\n");
+                } else {
+                    stringBuilder.append("arg").append("[").append(i).append("]").append(" = ").append(object.toString()).append("\n");
+                }
+            }
+            return stringBuilder.toString();
+        }
+        return "";
     }
 
     public static void v(String content) {
-        if (!isEnable) return;
-        String tag = generateTag();
-
-        Log.v(tag, content);
+        if (!mLogConfig.isEnable) return;
+        log(LOG_V, null, content, null);
     }
 
-    public static void v(String content, Throwable tr) {
-        if (!isEnable) return;
-        String tag = generateTag();
-
-        Log.v(tag, content, tr);
+    public static void v(String tag, String content, Object... objects) {
+        if (!mLogConfig.isEnable) return;
+        log(LOG_V, tag, content, null, objects);
     }
 
-    public static void w(String content) {
-        if (!isEnable) return;
-        String tag = generateTag();
-
-        Log.w(tag, content);
+    public static void log(int logSupport, String tag, String content, Throwable tr, Object... args) {
+        switch (logSupport) {
+            case LOG_V:
+                Log.v(generateTag(tag), generateContent(content, args), tr);
+                break;
+            case LOG_D:
+                break;
+            case LOG_I:
+                break;
+            case LOG_W:
+                break;
+            case LOG_E:
+                break;
+            default:
+                Log.wtf(generateTag(tag), generateContent(content, args), tr);
+                break;
+        }
     }
-
-    public static void w(String content, Throwable tr) {
-        if (!isEnable) return;
-        String tag = generateTag();
-
-        Log.w(tag, content, tr);
-    }
-
-    public static void w(Throwable tr) {
-        if (!isEnable) return;
-        String tag = generateTag();
-
-        Log.w(tag, tr);
-    }
-
-
-    public static void wtf(String content) {
-        if (!isEnable) return;
-        String tag = generateTag();
-
-        Log.wtf(tag, content);
-    }
-
-    public static void wtf(String content, Throwable tr) {
-        if (!isEnable) return;
-        String tag = generateTag();
-
-        Log.wtf(tag, content, tr);
-    }
-
-    public static void wtf(Throwable tr) {
-        if (!isEnable) return;
-        String tag = generateTag();
-
-        Log.wtf(tag, tr);
-    }
-
 }

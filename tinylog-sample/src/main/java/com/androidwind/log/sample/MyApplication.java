@@ -10,13 +10,11 @@ import com.androidwind.log.TinyLog;
  */
 public class MyApplication extends Application {
 
-    private static MyApplication INSTANCE;
-
     @Override
     public void onCreate() {
         super.onCreate();
-
-        TinyLog.init(BuildConfig.DEBUG);
+        TinyLog.config().setEnable(BuildConfig.DEBUG);
+        TinyLog.v("this is tinylog");
     }
 
 }
