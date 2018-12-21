@@ -8,6 +8,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
+ * configuration for TinyLog
+ * we should use TinyLog.config() when app initialized
+ *
  * @author ddnosh
  * @website http://blog.csdn.net/ddnosh
  */
@@ -23,19 +26,19 @@ public class LogConfig implements LogConfigContract {
     private PrintWriter mPrintWriter;
 
     @Override
-    public LogConfig setEnable(boolean enable) {
+    public LogConfigContract setEnable(boolean enable) {
         this.isEnable = enable;
         return this;
     }
 
     @Override
-    public LogConfig setWritable(boolean writable) {
+    public LogConfigContract setWritable(boolean writable) {
         this.isWritable = writable;
         return this;
     }
 
     @Override
-    public LogConfig setLogPath(String logPath) {
+    public LogConfigContract setLogPath(String logPath) {
         this.logPath = logPath;
         return this;
     }
