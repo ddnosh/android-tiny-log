@@ -18,12 +18,9 @@ public class TinyLog {
     private static final int LOG_W = 3;
     private static final int LOG_E = 4;
 
-    private static LogConfig mLogConfig;
+    private static LogConfig mLogConfig = new LogConfig();
 
     public static LogConfig config() {
-        if (mLogConfig == null) {
-            mLogConfig = new LogConfig();
-        }
         return mLogConfig;
     }
 
@@ -59,11 +56,11 @@ public class TinyLog {
     private static String generateContent(String content, Object... objects) {
         StackTraceElement caller = new Throwable().getStackTrace()[3];
         String result = "(%s:%d) %s";
-        result = String.format(result, caller.getFileName(), caller.getLineNumber(), content + wrapperContent(objects));
+        result = String.format(result, caller.getFileName(), caller.getLineNumber(), content + wrapContent(objects));
         return result;
     }
 
-    private static Object wrapperContent(Object... objects) {
+    private static Object wrapContent(Object... objects) {
         if (objects.length > 0) {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append("\n");
@@ -80,7 +77,7 @@ public class TinyLog {
         return "";
     }
 
-    public static void logConsole(int logSupport, String tag, String content, Throwable tr, Object... args) {
+    private static void logConsole(int logSupport, String tag, String content, Throwable tr, Object... args) {
         switch (logSupport) {
             case LOG_V:
                 Log.v(generateTag(tag), generateContent(content, args), tr);
@@ -103,10 +100,10 @@ public class TinyLog {
         }
     }
 
-    public static void logFile(int logSupport, String tag, String content, Throwable tr, Object... args) {
+    private static void logFile(int logSupport, String tag, String content, Throwable tr, Object... args) {
         SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
         String time = sf.format(new Date());
-        String level = "V";
+        String level;
         switch (logSupport) {
             case LOG_V:
                 level = "V";

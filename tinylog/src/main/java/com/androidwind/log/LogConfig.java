@@ -6,6 +6,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * configuration for TinyLog
@@ -24,6 +26,8 @@ public class LogConfig implements LogConfigContract {
     public String logPath;
     //printer
     private PrintWriter mPrintWriter;
+
+    private static ExecutorService executor;
 
     @Override
     public LogConfigContract setEnable(boolean enable) {
@@ -67,11 +71,18 @@ public class LogConfig implements LogConfigContract {
             Log.e("LogConfig", "PrintWriter IOException");
             e.printStackTrace();
         }
+
+        executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
     }
 
-    public void saveToFile(String message) {
-        synchronized (mPrintWriter) {
-            mPrintWriter.println(message);
-        }
+    public void saveToFile(final String message) {
+        executor.execute(new Runnable () {
+            public void run() {
+                synchronized (mPrintWriter) {
+                    Log.v("LogConfig", Thread.currentThread().getName() + " : " + Thread.currentThread().getId());
+                    mPrintWriter.println(message);
+                }
+            }
+        });
     }
 }
