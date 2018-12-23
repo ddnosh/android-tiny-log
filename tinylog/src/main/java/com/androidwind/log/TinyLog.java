@@ -40,6 +40,78 @@ public class TinyLog {
         logConsole(LOG_V, tag, content, null, objects);
     }
 
+    public static void d(String content) {
+        if (!mLogConfig.isEnable) return;
+        if (mLogConfig.isWritable) {
+            logFile(LOG_D, null, content, null);
+        }
+        logConsole(LOG_D, null, content, null);
+    }
+
+    public static void d(String tag, String content, Object... objects) {
+        if (!mLogConfig.isEnable) return;
+        if (mLogConfig.isWritable) {
+            logFile(LOG_D, tag, content, null, objects);
+        }
+        logConsole(LOG_D, tag, content, null, objects);
+    }
+
+    public static void i(String content) {
+        if (!mLogConfig.isEnable) return;
+        if (mLogConfig.isWritable) {
+            logFile(LOG_I, null, content, null);
+        }
+        logConsole(LOG_I, null, content, null);
+    }
+
+    public static void i(String tag, String content, Object... objects) {
+        if (!mLogConfig.isEnable) return;
+        if (mLogConfig.isWritable) {
+            logFile(LOG_I, tag, content, null, objects);
+        }
+        logConsole(LOG_I, tag, content, null, objects);
+    }
+
+    public static void w(String content) {
+        if (!mLogConfig.isEnable) return;
+        if (mLogConfig.isWritable) {
+            logFile(LOG_W, null, content, null);
+        }
+        logConsole(LOG_W, null, content, null);
+    }
+
+    public static void w(String tag, String content, Object... objects) {
+        if (!mLogConfig.isEnable) return;
+        if (mLogConfig.isWritable) {
+            logFile(LOG_W, tag, content, null, objects);
+        }
+        logConsole(LOG_W, tag, content, null, objects);
+    }
+
+    public static void e(String content) {
+        if (!mLogConfig.isEnable) return;
+        if (mLogConfig.isWritable) {
+            logFile(LOG_E, null, content, null);
+        }
+        logConsole(LOG_E, null, content, null);
+    }
+
+    public static void e(String tag, String content, Object... objects) {
+        if (!mLogConfig.isEnable) return;
+        if (mLogConfig.isWritable) {
+            logFile(LOG_E, tag, content, null, objects);
+        }
+        logConsole(LOG_E, tag, content, null, objects);
+    }
+
+    public static void e(String tag, String content, Throwable t, Object... objects) {
+        if (!mLogConfig.isEnable) return;
+        if (mLogConfig.isWritable) {
+            logFile(LOG_E, tag, content, t, objects);
+        }
+        logConsole(LOG_E, tag, content, t, objects);
+    }
+
     private static String generateTag(String tag) {
         if (!TextUtils.isEmpty(tag)) {
             return tag;
