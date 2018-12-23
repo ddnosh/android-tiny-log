@@ -15,11 +15,9 @@ so we should not new objects frequently to invoke like that.
 1. switch to log to console or not;
 2. switch to log to file or not;
 3. click the log to jump to the code position automatically;
+4. log to file by size;
 
 ### TODO
 1. save as Json format;
 2. save as Xml format;
-3. add thread name and thread id to content output;
-4. save log to customized file;
-5. save log to file by customized file size;
-6. use thread pool when log to file;
+3. save log to customized file;

@@ -47,8 +47,8 @@ public class TinyLog {
             StackTraceElement caller = new Throwable().getStackTrace()[3];
             String callerClazzName = caller.getClassName();
             callerClazzName = callerClazzName.substring(callerClazzName.lastIndexOf(".") + 1);
-            String result = "%s.%s.%d";
-            result = String.format(result, callerClazzName, caller.getMethodName(), caller.getLineNumber());
+            String result = "%s.%s";
+            result = String.format(result, callerClazzName, caller.getMethodName());
             return result;
         }
     }
@@ -124,11 +124,13 @@ public class TinyLog {
                 level = "WTF";
                 break;
         }
-        StackTraceElement caller = new Throwable().getStackTrace()[3];
+        StackTraceElement caller = new Throwable().getStackTrace()[2];
+        String callerClazzName = caller.getClassName();
+        callerClazzName = callerClazzName.substring(callerClazzName.lastIndexOf(".") + 1);
         //打印进程ID 线程ID 当前类 当前方法
         String message = time + " " + level + " "
-                + "" + android.os.Process.myPid() + "|" + android.os.Process.myTid()
-                + " [" + caller.getClassName() + "->" + caller.getMethodName() + "]"
+                + "" + android.os.Process.myPid() + "|" + Thread.currentThread().getId()
+                + " [" + callerClazzName + "->" + caller.getMethodName() + "]"
                 + " [" + generateTag(tag) + "]" + generateContent(content, args);
         mLogConfig.saveToFile(message);
     }

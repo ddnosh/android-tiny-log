@@ -20,7 +20,7 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         application = this;
-        TinyLog.config().setEnable(BuildConfig.DEBUG).setWritable(true).setLogPath(getLogDir()).apply();
+        TinyLog.config().setEnable(BuildConfig.DEBUG).setWritable(true).setLogPath(getLogDir()).setFileSize(1).apply();
         TinyLog.v("this is tinylog");
     }
 

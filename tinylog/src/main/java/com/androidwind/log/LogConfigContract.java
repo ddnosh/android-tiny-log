@@ -11,5 +11,7 @@ public interface LogConfigContract {
 
     LogConfigContract setLogPath(String logPath);
 
+    LogConfigContract setFileSize(int fileSize);
+
     void apply();
 }
