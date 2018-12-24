@@ -96,6 +96,14 @@ public class TinyLog {
         logConsole(LOG_E, null, content, null);
     }
 
+    public static void e(String content, Throwable t, Object... objects) {
+        if (!mLogConfig.isEnable) return;
+        if (mLogConfig.isWritable) {
+            logFile(LOG_E, null, content, t, objects);
+        }
+        logConsole(LOG_E, null, content, t, objects);
+    }
+
     public static void e(String tag, String content, Object... objects) {
         if (!mLogConfig.isEnable) return;
         if (mLogConfig.isWritable) {
@@ -103,6 +111,7 @@ public class TinyLog {
         }
         logConsole(LOG_E, tag, content, null, objects);
     }
+
 
     public static void e(String tag, String content, Throwable t, Object... objects) {
         if (!mLogConfig.isEnable) return;
@@ -199,11 +208,12 @@ public class TinyLog {
         StackTraceElement caller = new Throwable().getStackTrace()[2];
         String callerClazzName = caller.getClassName();
         callerClazzName = callerClazzName.substring(callerClazzName.lastIndexOf(".") + 1);
+        String error = tr != null ? "\n" + Log.getStackTraceString(tr) : "";
         //打印进程ID 线程ID 当前类 当前方法
         String message = time + " " + level + " "
                 + "" + android.os.Process.myPid() + "|" + Thread.currentThread().getId()
                 + " [" + callerClazzName + "->" + caller.getMethodName() + "]"
-                + " [" + generateTag(tag) + "]" + generateContent(content, args);
+                + " [" + generateTag(tag) + "]" + generateContent(content, args) + error;
         mLogConfig.saveToFile(message);
     }
 }

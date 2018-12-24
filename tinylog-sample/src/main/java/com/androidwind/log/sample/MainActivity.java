@@ -16,11 +16,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 //test
-                for (int i = 0; i < 3000; i++){
+                for (int i = 0; i < 1; i++){
                     TinyLog.v("this is tinylog");
-                    TinyLog.v("TAG", "this is tinylog");
-                    TinyLog.v("TAG", "this is tinylog", "arg1");
-                    TinyLog.v("TAG", "this is tinylog", "arg1", "arg2");
+                    TinyLog.d("TAG", "this is tinylog");
+                    TinyLog.i("TAG", "this is tinylog", "arg1");
+                    TinyLog.w("TAG", "this is tinylog", "arg1", "arg2");
+                    try {
+                        String s = null;
+                        s.toString();
+                    } catch (NullPointerException e) {
+                        TinyLog.e("TAG", e, "printStackTrace");
+                    }
                 }
             }
         }).start();
