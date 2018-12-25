@@ -21,6 +21,12 @@ so we should not new objects frequently to invoke like that.
 2. synchronized: manage multiple threads access;
 3. new Throwable(): get such as file name, class name, method name, line number;
 
+### Usage
+1. initialize
+<font color="red">TinyLog.config().setEnable(BuildConfig.DEBUG).setWritable(true).setLogPath(getLogDir()).setFileSize(1).setLogCallBack(mLogCallBack).apply()</font>;
+You can init TinyLog like that, and you can choose enable, writable, logpath, filesize and callback or not;
+if you don't set, they also have default value.
+
 ### TODO
 1. save as Json format;
 2. save as Xml format;

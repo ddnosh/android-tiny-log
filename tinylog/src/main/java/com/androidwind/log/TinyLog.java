@@ -159,24 +159,31 @@ public class TinyLog {
     }
 
     private static void logConsole(int logSupport, String tag, String content, Throwable tr, Object... args) {
+        String logTag, logContent;
+        logTag = generateTag(tag);
+        logContent = generateContent(content, args);
+        if (mLogConfig.mLogCallBack != null) {
+            mLogConfig.mLogCallBack.getLogString(logTag, logContent);
+        }
+
         switch (logSupport) {
             case LOG_V:
-                Log.v(generateTag(tag), generateContent(content, args), tr);
+                Log.v(logTag, logContent, tr);
                 break;
             case LOG_D:
-                Log.d(generateTag(tag), generateContent(content, args), tr);
+                Log.d(logTag, logContent, tr);
                 break;
             case LOG_I:
-                Log.i(generateTag(tag), generateContent(content, args), tr);
+                Log.i(logTag, logContent, tr);
                 break;
             case LOG_W:
-                Log.w(generateTag(tag), generateContent(content, args), tr);
+                Log.w(logTag, logContent, tr);
                 break;
             case LOG_E:
-                Log.e(generateTag(tag), generateContent(content, args), tr);
+                Log.e(logTag, logContent, tr);
                 break;
             default:
-                Log.wtf(generateTag(tag), generateContent(content, args), tr);
+                Log.wtf(logTag, logContent, tr);
                 break;
         }
     }

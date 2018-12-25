@@ -13,5 +13,7 @@ public interface LogConfigContract {
 
     LogConfigContract setFileSize(int fileSize);
 
+    LogConfigContract setLogCallBack(LogConfig.LogCallBack callBack);
+
     void apply();
 }

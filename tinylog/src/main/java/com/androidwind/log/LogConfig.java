@@ -27,7 +27,8 @@ public class LogConfig implements LogConfigContract {
     //log path
     public String mLogPath;
     //single file size, unit:M
-    public int fileSize = 1;
+    public int mFileSize = 1;
+    public LogCallBack mLogCallBack;
     //printer
     private PrintWriter mPrintWriter;
     //currentFile
@@ -55,7 +56,13 @@ public class LogConfig implements LogConfigContract {
 
     @Override
     public LogConfigContract setFileSize(int fileSize) {
-        this.fileSize = fileSize;
+        this.mFileSize = fileSize;
+        return this;
+    }
+
+    @Override
+    public LogConfigContract setLogCallBack(LogCallBack callBack) {
+        this.mLogCallBack = callBack;
         return this;
     }
 
@@ -101,8 +108,12 @@ public class LogConfig implements LogConfigContract {
     private void checkFile() {
         long fileSizeM = (mCurrentFile.length() / 1024 / 1024);// convert to M bytes
         Log.v("LogConfig", mCurrentFile.getName() + ", " + "file size: " + mCurrentFile.length() + " byte");
-        if (fileSizeM >= fileSize) {
+        if (fileSizeM >= mFileSize) {
             createFile();
         }
+    }
+
+    public interface LogCallBack {
+        void getLogString(String tag, String content);
     }
 }
