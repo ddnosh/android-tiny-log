@@ -23,10 +23,16 @@ so we should not new objects frequently to invoke like that.
 
 ### Usage
 1. initialize
-TinyLog.config().setEnable(BuildConfig.DEBUG).setWritable(true).setLogPath(getLogDir()).setFileSize(1).setLogCallBack(mLogCallBack).apply();
-
+TinyLog.config().setEnable(BuildConfig.DEBUG).setWritable(true).setLogPath(getLogDir()).setFileSize(1).setLogCallBack(mLogCallBack).apply();  
 You can init TinyLog like that, and you can choose enable, writable, logpath, filesize and callback or not;
 if you don't set, they also have default value.
+
+2. api
+    1. TinyLog.v/d/i/w/e("content");
+    2. TinyLog.v/d/i/w/e("tag", "content");
+    3. TinyLog.v/d/i/w/e("tag", "content", "arg1");
+    4. TinyLog.e("content", e, "arg1")
+    5. TinyLog.e("tag", "content", e, "arg1")
 
 ### TODO
 1. save as Json format;
