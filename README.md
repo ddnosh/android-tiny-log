@@ -23,7 +23,8 @@ so we should not new objects frequently to invoke like that.
 
 ### Usage
 1. initialize
-<font color="red">TinyLog.config().setEnable(BuildConfig.DEBUG).setWritable(true).setLogPath(getLogDir()).setFileSize(1).setLogCallBack(mLogCallBack).apply()</font>;
+TinyLog.config().setEnable(BuildConfig.DEBUG).setWritable(true).setLogPath(getLogDir()).setFileSize(1).setLogCallBack(mLogCallBack).apply();
+
 You can init TinyLog like that, and you can choose enable, writable, logpath, filesize and callback or not;
 if you don't set, they also have default value.
 
