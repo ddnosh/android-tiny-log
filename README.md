@@ -17,9 +17,12 @@ so we should not new objects frequently to invoke like that.
 4. log to file by size;
 
 ### Technology
-1. thread pool: log to file;
-2. synchronized: manage multiple threads access;
-3. new Throwable(): get such as file name, class name, method name, line number;
+1. Desing Pattern
+    1. static
+2. Skill Point
+    1. ExecutorService
+    2. synchronized
+    3. new Throwable()
 
 ### Usage
 1. initialize
