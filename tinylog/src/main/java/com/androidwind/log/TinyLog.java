@@ -29,7 +29,7 @@ public class TinyLog {
 
     private static void preCheck() {
         if (mLogConfig == null)
-            throw new RuntimeException("You should initialize LogConfig first, such as \"Tiny.config()\".");
+            throw new RuntimeException("[TinyLog Exception]: You should initialize LogConfig first, such as \"Tiny.config()\".");
     }
 
     public static void v(String content) {

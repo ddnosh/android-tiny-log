@@ -18,7 +18,7 @@ import java.util.concurrent.Executors;
  * @author ddnosh
  * @website http://blog.csdn.net/ddnosh
  */
-public class LogConfig implements LogConfigContract {
+public class LogConfig implements ILogConfig {
 
     //whether log
     public boolean isEnable;
@@ -37,31 +37,31 @@ public class LogConfig implements LogConfigContract {
     private static ExecutorService executor;
 
     @Override
-    public LogConfigContract setEnable(boolean enable) {
+    public ILogConfig setEnable(boolean enable) {
         this.isEnable = enable;
         return this;
     }
 
     @Override
-    public LogConfigContract setWritable(boolean writable) {
+    public ILogConfig setWritable(boolean writable) {
         this.isWritable = writable;
         return this;
     }
 
     @Override
-    public LogConfigContract setLogPath(String logPath) {
+    public ILogConfig setLogPath(String logPath) {
         this.mLogPath = logPath;
         return this;
     }
 
     @Override
-    public LogConfigContract setFileSize(int fileSize) {
+    public ILogConfig setFileSize(int fileSize) {
         this.mFileSize = fileSize;
         return this;
     }
 
     @Override
-    public LogConfigContract setLogCallBack(LogCallBack callBack) {
+    public ILogConfig setLogCallBack(LogCallBack callBack) {
         this.mLogCallBack = callBack;
         return this;
     }
@@ -102,6 +102,7 @@ public class LogConfig implements LogConfigContract {
         } catch (IOException e) {
             Log.e("LogConfig", "PrintWriter IOException");
             e.printStackTrace();
+            throw new RuntimeException("[TinyLog Exception]: " + e.getMessage());
         }
     }
 

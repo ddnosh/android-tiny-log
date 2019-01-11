@@ -14,7 +14,7 @@ public class LogUtil {
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
             return Environment.getExternalStorageDirectory().getPath() + File.separator + "Log";
         } else {
-            throw new RuntimeException("there is no storage!");
+            throw new RuntimeException("[TinyLog Exception]: there is no storage!");
         }
 
     }
