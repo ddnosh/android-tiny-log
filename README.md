@@ -42,3 +42,4 @@ if you don't set, they also have default value.
 1. save as Json format;
 2. save as Xml format;
 3. save log to customized file;
+4. multi process support;

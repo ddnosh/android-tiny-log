@@ -68,6 +68,8 @@ public class LogConfig implements ILogConfig {
 
     @Override
     public void apply() {
+        if (!isWritable)
+            return;
         if (mLogPath == null) {
             mLogPath = LogUtil.getLogDir();
         }
