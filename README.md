@@ -16,6 +16,7 @@ so we should not new objects frequently to invoke like that.
 2. switch to log to file or not;
 3. click the log to jump to the code position automatically;
 4. log to file by size;
+5. output content can be encrypted;
 
 ### Technology
 1. Desing Pattern
@@ -27,8 +28,8 @@ so we should not new objects frequently to invoke like that.
 
 ### Usage
 1. initialize
-TinyLog.config().setEnable(BuildConfig.DEBUG).setWritable(true).setLogPath(getLogDir()).setFileSize(1).setLogCallBack(mLogCallBack).apply();  
-You can init TinyLog like that, and you can choose enable, writable, logpath, filesize and callback or not;
+TinyLog.config().setEnable(BuildConfig.DEBUG).setWritable(true).setLogPath(getLogDir()).setFileSize(1).setEncrypt("1234567812345678").setLogCallBack(mLogCallBack).apply();
+You can init TinyLog like that, and you can choose enable, writable, logpath, filesize, encrypt and callback or not;
 if you don't set, they also have default value.
 
 2. api
