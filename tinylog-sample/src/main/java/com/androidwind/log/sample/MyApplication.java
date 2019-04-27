@@ -21,6 +21,8 @@ public class MyApplication extends Application {
         super.onCreate();
         application = this;
         TinyLog.config().setEnable(BuildConfig.DEBUG).setWritable(true).setLogPath(getLogDir()).setFileSize(1).apply();
+        //加密
+        // TinyLog.config().setEnable(BuildConfig.DEBUG).setWritable(true).setLogPath(getLogDir()).setFileSize(1).setEncrypt("1234567812345678").apply();
         TinyLog.v("this is tinylog");
     }
 

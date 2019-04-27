@@ -182,10 +182,16 @@ public class TinyLog {
         String logTag, logContent;
         logTag = generateTag(tag);
         logContent = generateContent(content, args);
+        if (mLogConfig.key != null && !"".equals(mLogConfig.key)) {
+            try {
+                logContent = LogUtil.encrypt(mLogConfig.key, logContent);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         if (mLogConfig.mLogCallBack != null) {
             mLogConfig.mLogCallBack.getLogString(logTag, logContent);
         }
-
         switch (logSupport) {
             case LOG_V:
                 Log.v(logTag, logContent, tr);
@@ -209,6 +215,13 @@ public class TinyLog {
     }
 
     private static void logFile(int logSupport, String tag, String content, Throwable tr, Object... args) {
+        if (mLogConfig.key != null && !"".equals(mLogConfig.key)) {
+            try {
+                content = LogUtil.encrypt(mLogConfig.key, content);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
         String time = sf.format(new Date());
         String level;

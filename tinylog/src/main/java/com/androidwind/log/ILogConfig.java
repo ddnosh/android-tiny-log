@@ -15,5 +15,7 @@ public interface ILogConfig {
 
     ILogConfig setLogCallBack(LogConfig.LogCallBack callBack);
 
+    ILogConfig setEncrypt(String key);
+
     void apply();
 }

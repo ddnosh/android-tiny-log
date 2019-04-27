@@ -33,6 +33,8 @@ public class LogConfig implements ILogConfig {
     private PrintWriter mPrintWriter;
     //currentFile
     private File mCurrentFile;
+    //encrypt && decrypt
+    public String key;
 
     private static ExecutorService executor;
 
@@ -63,6 +65,12 @@ public class LogConfig implements ILogConfig {
     @Override
     public ILogConfig setLogCallBack(LogCallBack callBack) {
         this.mLogCallBack = callBack;
+        return this;
+    }
+
+    @Override
+    public ILogConfig setEncrypt(String key) {
+        this.key = key;
         return this;
     }
 
