@@ -1,1 +1,1 @@
-include ':tinylog-sample', ':tinylog'
+include ':tinylog-sample', ':tinylog', ':tinylog-sample-kotlin', ':tinylog-kotlin'

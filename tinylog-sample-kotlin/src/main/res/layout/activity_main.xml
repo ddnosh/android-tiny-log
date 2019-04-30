@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/btn_click_once"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="click to log once" />
+
+    <LinearLayout
+        android:id="@+id/ll_click_more"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btn_click_once"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_click_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="click to log multiple times" />
+
+        <EditText
+            android:id="@+id/et_times"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="input times to log"
+            android:inputType="number"
+            android:text="100" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_clear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_click_more"
+        android:text="clear log" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/btn_clear"
+        android:fadingEdge="vertical"
+        android:fadingEdgeLength="20dp"
+        android:fillViewport="true"
+        android:overScrollMode="never"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:requiresFadingEdge="vertical">
+
+        <TextView
+            android:id="@+id/tv_output"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </ScrollView>
+
+    <include layout="@layout/include_description"/>
+
+</RelativeLayout>
