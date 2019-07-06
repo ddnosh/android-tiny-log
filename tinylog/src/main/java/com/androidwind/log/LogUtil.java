@@ -10,6 +10,8 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 /**
+ * Log Utils
+ *
  * @author ddnosh
  * @website http://blog.csdn.net/ddnosh
  */

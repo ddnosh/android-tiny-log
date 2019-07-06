@@ -7,6 +7,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
+ * the core class of TintLog
+ *
  * @author ddnosh
  * @website http://blog.csdn.net/ddnosh
  */
@@ -182,9 +184,9 @@ public class TinyLog {
         String logTag, logContent;
         logTag = generateTag(tag);
         logContent = generateContent(content, args);
-        if (mLogConfig.key != null && !"".equals(mLogConfig.key)) {
+        if (mLogConfig.mKey != null && !"".equals(mLogConfig.mKey)) {
             try {
-                logContent = LogUtil.encrypt(mLogConfig.key, logContent);
+                logContent = LogUtil.encrypt(mLogConfig.mKey, logContent);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -215,9 +217,9 @@ public class TinyLog {
     }
 
     private static void logFile(int logSupport, String tag, String content, Throwable tr, Object... args) {
-        if (mLogConfig.key != null && !"".equals(mLogConfig.key)) {
+        if (mLogConfig.mKey != null && !"".equals(mLogConfig.mKey)) {
             try {
-                content = LogUtil.encrypt(mLogConfig.key, content);
+                content = LogUtil.encrypt(mLogConfig.mKey, content);
             } catch (Exception e) {
                 e.printStackTrace();
             }

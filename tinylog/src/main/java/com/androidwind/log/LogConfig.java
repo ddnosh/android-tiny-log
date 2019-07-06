@@ -12,7 +12,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
- * configuration for TinyLog
+ * ILogConfig's implementation class
  * we should use TinyLog.config() when app initialized
  *
  * @author ddnosh
@@ -20,21 +20,22 @@ import java.util.concurrent.Executors;
  */
 public class LogConfig implements ILogConfig {
 
-    //whether log
-    public boolean isEnable;
+    //enable log or not
+    boolean isEnable;
     //whether log to file
-    public boolean isWritable;
+    boolean isWritable;
     //log path
-    public String mLogPath;
+    private String mLogPath;
     //single file size, unit:M
-    public int mFileSize = 1;
-    public LogCallBack mLogCallBack;
+    private int mFileSize = 1;
+    //output callback
+    LogCallBack mLogCallBack;
     //printer
     private PrintWriter mPrintWriter;
     //currentFile
     private File mCurrentFile;
     //encrypt && decrypt
-    public String key;
+    String mKey;
 
     private static ExecutorService executor;
 
@@ -58,6 +59,9 @@ public class LogConfig implements ILogConfig {
 
     @Override
     public ILogConfig setFileSize(int fileSize) {
+        if (fileSize < 1) {
+            this.mFileSize = 1;
+        }
         this.mFileSize = fileSize;
         return this;
     }
@@ -70,7 +74,7 @@ public class LogConfig implements ILogConfig {
 
     @Override
     public ILogConfig setEncrypt(String key) {
-        this.key = key;
+        this.mKey = key;
         return this;
     }
 
@@ -88,7 +92,7 @@ public class LogConfig implements ILogConfig {
 
         createFile();
 
-        executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+        executor = Executors.newSingleThreadExecutor(); //file operation should use single thread pool
     }
 
     public void saveToFile(final String message) {

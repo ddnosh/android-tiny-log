@@ -5,13 +5,15 @@ import java.io.File
 import java.io.FileWriter
 import java.io.IOException
 import java.io.PrintWriter
-import java.nio.file.Files.createFile
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 /**
+ * ILogConfig's implementation class
+ * we should use TinyLog.config() when app initialized
+ *
  * @author  ddnosh
  * @website http://blog.csdn.net/ddnosh
  */
@@ -23,7 +25,7 @@ class LogConfig : ILogConfig {
     var mLogCallBack: LogCallBack? = null
     var mPrintWriter: PrintWriter? = null
     var mCurrentFile: File? = null
-    var key: String? = null
+    var mKey: String? = null
 
     companion object {
         var executor: ExecutorService? = null
@@ -45,6 +47,9 @@ class LogConfig : ILogConfig {
     }
 
     override fun setFileSize(fileSize: Int): ILogConfig {
+        if (fileSize < 1) {
+            this.mFileSize = 1
+        }
         this.mFileSize = fileSize
         return this
     }
@@ -55,7 +60,7 @@ class LogConfig : ILogConfig {
     }
 
     override fun setEncrypt(key: String): ILogConfig {
-        this.key = key
+        this.mKey = key
         return this
     }
 
@@ -69,7 +74,7 @@ class LogConfig : ILogConfig {
             dir.mkdirs()
         }
         createFile()
-        executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors())
+        executor = Executors.newSingleThreadExecutor(); //file operation should use single thread pool
     }
 
     fun saveToFile(message: String) {

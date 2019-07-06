@@ -2,6 +2,7 @@ package com.androidwind.log.sample
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.text.TextUtils
 import android.text.method.ScrollingMovementMethod
 import android.view.View
 import android.widget.Button
@@ -64,7 +65,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         } else if (v.id == R.id.btn_click_more) {
             mStringBuilder.delete(0, mStringBuilder.length)
             tv_output?.text = mStringBuilder.toString()
-
+            if (TextUtils.isEmpty(et_times.getText().toString())) {
+                return
+            }
             times = Integer.valueOf(et_times.getText().toString())
             Thread(Runnable {
                 //test

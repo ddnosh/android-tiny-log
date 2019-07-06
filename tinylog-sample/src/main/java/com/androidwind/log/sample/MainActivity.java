@@ -2,6 +2,7 @@ package com.androidwind.log.sample;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
@@ -65,6 +66,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             result.setText(mStringBuilder.toString());
 
             EditText etTimes = findViewById(R.id.et_times);
+            if (TextUtils.isEmpty(etTimes.getText().toString())) {
+                return;
+            }
             times = Integer.valueOf(etTimes.getText().toString());
             new Thread(new Runnable() {
                 @Override

@@ -11,6 +11,7 @@
         android:id="@+id/btn_click_once"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textAllCaps="false"
         android:text="click to log once" />
 
     <LinearLayout
@@ -24,6 +25,7 @@
             android:id="@+id/btn_click_more"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textAllCaps="false"
             android:text="click to log multiple times" />
 
         <EditText
@@ -32,7 +34,7 @@
             android:layout_height="wrap_content"
             android:hint="input times to log"
             android:inputType="number"
-            android:text="100" />
+            android:text="1" />
     </LinearLayout>
 
     <Button
@@ -40,6 +42,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/ll_click_more"
+        android:textAllCaps="false"
         android:text="clear log" />
 
     <ScrollView
