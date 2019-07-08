@@ -2,7 +2,7 @@
 [![Download](https://api.bintray.com/packages/ddnosh/maven/tinylog/images/download.svg) ](https://bintray.com/ddnosh/maven/tinylog/_latestVersion)  
 A tiny log library for android
 
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20181223135243751.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Rkbm9zaA==,size_16,color_FFFFFF,t_70)
+![在这里插入图片描述](https://github.com/ddnosh/githubusercontent/blob/master/image/android-tiny-log-readme.png?raw=true)
 
 ### Solution
 1. we will use Android Log API as "Log.d(TAG, content)" finally,
