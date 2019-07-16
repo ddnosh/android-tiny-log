@@ -26,6 +26,8 @@ class LogConfig : ILogConfig {
     var mPrintWriter: PrintWriter? = null
     var mCurrentFile: File? = null
     var mKey: String? = null
+    //output log level when >= logLevel
+    var logLevel: Int = TinyLog.LOG_V
 
     companion object {
         var executor: ExecutorService? = null
@@ -61,6 +63,11 @@ class LogConfig : ILogConfig {
 
     override fun setEncrypt(key: String): ILogConfig {
         this.mKey = key
+        return this
+    }
+
+    override fun setLogLevel(level: Int): ILogConfig {
+        this.logLevel = level
         return this
     }
 

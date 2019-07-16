@@ -19,5 +19,7 @@ interface ILogConfig {
 
     fun setEncrypt(key: String): ILogConfig
 
+    fun setLogLevel(level: Int): ILogConfig
+
     fun apply()
 }

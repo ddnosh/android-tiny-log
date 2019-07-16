@@ -20,9 +20,11 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         application = this;
-        TinyLog.config().setEnable(BuildConfig.DEBUG).setWritable(true).setLogPath(getLogDir()).setFileSize(1).apply();
-        //加密
+        // TinyLog.config().setEnable(BuildConfig.DEBUG).setWritable(true).setLogPath(getLogDir()).setFileSize(1).apply();
+        //encrypt
         // TinyLog.config().setEnable(BuildConfig.DEBUG).setWritable(true).setLogPath(getLogDir()).setFileSize(1).setEncrypt("1234567812345678").apply();
+        //logLevel
+        TinyLog.config().setEnable(BuildConfig.DEBUG).setWritable(true).setLogPath(getLogDir()).setFileSize(1).setLogLevel(TinyLog.LOG_I).apply();
         TinyLog.v("this is tinylog");
     }
 

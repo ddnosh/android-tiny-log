@@ -19,5 +19,7 @@ public interface ILogConfig {
 
     ILogConfig setEncrypt(String key);
 
+    ILogConfig setLogLevel(int level);
+
     void apply();
 }

@@ -36,6 +36,8 @@ public class LogConfig implements ILogConfig {
     private File mCurrentFile;
     //encrypt && decrypt
     String mKey;
+    //output log level when >= logLevel
+    int logLevel = TinyLog.LOG_V;
 
     private static ExecutorService executor;
 
@@ -75,6 +77,12 @@ public class LogConfig implements ILogConfig {
     @Override
     public ILogConfig setEncrypt(String key) {
         this.mKey = key;
+        return this;
+    }
+
+    @Override
+    public ILogConfig setLogLevel(int level) {
+        this.logLevel = level;
         return this;
     }
 

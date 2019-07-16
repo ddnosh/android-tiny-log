@@ -14,11 +14,11 @@ import java.util.Date
  */
 object TinyLog {
 
-    private val LOG_V = 0
-    private val LOG_D = 1
-    private val LOG_I = 2
-    private val LOG_W = 3
-    private val LOG_E = 4
+    val LOG_V = 0
+    val LOG_D = 1
+    val LOG_I = 2
+    val LOG_W = 3
+    val LOG_E = 4
 
     private val mLogConfig: LogConfig by lazy { LogConfig() }
 
@@ -27,13 +27,14 @@ object TinyLog {
     }
 
     private fun preCheck() {
-        if (mLogConfig == null)
+        if (mLogConfig == null) {
             throw RuntimeException("[TinyLog Exception]: You should initialize LogConfig first, such as \"Tiny.config()\".")
+        }
+        if (!mLogConfig.isEnable) return
     }
 
     fun v(content: String) {
         preCheck()
-        if (!mLogConfig.isEnable) return
         if (mLogConfig.isWritable) {
             logFile(LOG_V, null, content, null)
         }
@@ -42,7 +43,6 @@ object TinyLog {
 
     fun v(tag: String, content: String, vararg objects: Any) {
         preCheck()
-        if (!mLogConfig.isEnable) return
         if (mLogConfig.isWritable) {
             logFile(LOG_V, tag, content, null, *objects)
         }
@@ -51,7 +51,6 @@ object TinyLog {
 
     fun d(content: String) {
         preCheck()
-        if (!mLogConfig.isEnable) return
         if (mLogConfig.isWritable) {
             logFile(LOG_D, null, content, null)
         }
@@ -60,7 +59,6 @@ object TinyLog {
 
     fun d(tag: String, content: String, vararg objects: Any) {
         preCheck()
-        if (!mLogConfig.isEnable) return
         if (mLogConfig.isWritable) {
             logFile(LOG_D, tag, content, null, *objects)
         }
@@ -69,7 +67,6 @@ object TinyLog {
 
     fun i(content: String) {
         preCheck()
-        if (!mLogConfig.isEnable) return
         if (mLogConfig.isWritable) {
             logFile(LOG_I, null, content, null)
         }
@@ -78,7 +75,6 @@ object TinyLog {
 
     fun i(tag: String, content: String, vararg objects: Any) {
         preCheck()
-        if (!mLogConfig.isEnable) return
         if (mLogConfig.isWritable) {
             logFile(LOG_I, tag, content, null, *objects)
         }
@@ -87,7 +83,6 @@ object TinyLog {
 
     fun w(content: String) {
         preCheck()
-        if (!mLogConfig.isEnable) return
         if (mLogConfig.isWritable) {
             logFile(LOG_W, null, content, null)
         }
@@ -96,7 +91,6 @@ object TinyLog {
 
     fun w(tag: String, content: String, vararg objects: Any) {
         preCheck()
-        if (!mLogConfig.isEnable) return
         if (mLogConfig.isWritable) {
             logFile(LOG_W, tag, content, null, *objects)
         }
@@ -105,7 +99,6 @@ object TinyLog {
 
     fun e(content: String) {
         preCheck()
-        if (!mLogConfig.isEnable) return
         if (mLogConfig.isWritable) {
             logFile(LOG_E, null, content, null)
         }
@@ -114,7 +107,6 @@ object TinyLog {
 
     fun e(content: String, t: Throwable, vararg objects: Any) {
         preCheck()
-        if (!mLogConfig.isEnable) return
         if (mLogConfig.isWritable) {
             logFile(LOG_E, null, content, t, *objects)
         }
@@ -123,7 +115,6 @@ object TinyLog {
 
     fun e(tag: String, content: String, vararg objects: Any) {
         preCheck()
-        if (!mLogConfig.isEnable) return
         if (mLogConfig.isWritable) {
             logFile(LOG_E, tag, content, null, *objects)
         }
@@ -133,7 +124,6 @@ object TinyLog {
 
     fun e(tag: String, content: String, t: Throwable, vararg objects: Any) {
         preCheck()
-        if (!mLogConfig.isEnable) return
         if (mLogConfig.isWritable) {
             logFile(LOG_E, tag, content, t, *objects)
         }
@@ -178,6 +168,9 @@ object TinyLog {
     }
 
     private fun logConsole(logSupport: Int, tag: String?, content: String, tr: Throwable?, vararg args: Any) {
+        if (logSupport < mLogConfig.logLevel) {
+            return
+        }
         val logTag: String
         var logContent: String?
         logTag = generateTag(tag)
@@ -201,6 +194,9 @@ object TinyLog {
     }
 
     private fun logFile(logSupport: Int, tag: String?, content: String?, tr: Throwable?, vararg args: Any) {
+        if (logSupport < mLogConfig.logLevel) {
+            return
+        }
         var content = content
         if (mLogConfig.mKey != null && "" != mLogConfig.mKey) {
             try {
