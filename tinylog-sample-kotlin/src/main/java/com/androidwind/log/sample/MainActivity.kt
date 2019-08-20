@@ -5,11 +5,8 @@ import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
 import android.text.method.ScrollingMovementMethod
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
 
-import com.androidwind.log.LogConfig
+import com.androidwind.log.TinyLogConfig
 import com.androidwind.log.TinyLog
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -19,7 +16,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private val mStringBuilder: StringBuilder by lazy { StringBuilder() }
     private var times: Int = 0
 
-    private val mLogCallBack = object : LogConfig.LogCallBack {
+    private val mLogCallBack = object : TinyLogConfig.LogCallBack {
         override fun getLogString(tag: String, content: String) {
             mStringBuilder.append("$tag -----------> $content").append("\n")
             this@MainActivity.runOnUiThread { tv_output?.text = mStringBuilder.toString() }

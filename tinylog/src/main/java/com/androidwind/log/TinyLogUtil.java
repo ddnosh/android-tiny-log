@@ -15,7 +15,7 @@ import javax.crypto.spec.SecretKeySpec;
  * @author ddnosh
  * @website http://blog.csdn.net/ddnosh
  */
-public class LogUtil {
+public class TinyLogUtil {
 
     public static String getLogDir() {
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {

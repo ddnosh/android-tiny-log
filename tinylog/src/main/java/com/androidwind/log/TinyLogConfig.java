@@ -12,13 +12,13 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
- * ILogConfig's implementation class
+ * ITinyLogConfig's implementation class
  * we should use TinyLog.config() when app initialized
  *
  * @author ddnosh
  * @website http://blog.csdn.net/ddnosh
  */
-public class LogConfig implements ILogConfig {
+public class TinyLogConfig implements ITinyLogConfig {
 
     //enable log or not
     boolean isEnable;
@@ -42,25 +42,25 @@ public class LogConfig implements ILogConfig {
     private static ExecutorService executor;
 
     @Override
-    public ILogConfig setEnable(boolean enable) {
+    public ITinyLogConfig setEnable(boolean enable) {
         this.isEnable = enable;
         return this;
     }
 
     @Override
-    public ILogConfig setWritable(boolean writable) {
+    public ITinyLogConfig setWritable(boolean writable) {
         this.isWritable = writable;
         return this;
     }
 
     @Override
-    public ILogConfig setLogPath(String logPath) {
+    public ITinyLogConfig setLogPath(String logPath) {
         this.mLogPath = logPath;
         return this;
     }
 
     @Override
-    public ILogConfig setFileSize(int fileSize) {
+    public ITinyLogConfig setFileSize(int fileSize) {
         if (fileSize < 1) {
             this.mFileSize = 1;
         }
@@ -69,19 +69,19 @@ public class LogConfig implements ILogConfig {
     }
 
     @Override
-    public ILogConfig setLogCallBack(LogCallBack callBack) {
+    public ITinyLogConfig setLogCallBack(LogCallBack callBack) {
         this.mLogCallBack = callBack;
         return this;
     }
 
     @Override
-    public ILogConfig setEncrypt(String key) {
+    public ITinyLogConfig setEncrypt(String key) {
         this.mKey = key;
         return this;
     }
 
     @Override
-    public ILogConfig setLogLevel(int level) {
+    public ITinyLogConfig setLogLevel(int level) {
         this.logLevel = level;
         return this;
     }
@@ -91,7 +91,7 @@ public class LogConfig implements ILogConfig {
         if (!isWritable)
             return;
         if (mLogPath == null) {
-            mLogPath = LogUtil.getLogDir();
+            mLogPath = TinyLogUtil.getLogDir();
         }
         File dir = new File(mLogPath);
         if (!dir.exists()) {
@@ -108,7 +108,7 @@ public class LogConfig implements ILogConfig {
             public void run() {
                 synchronized (mPrintWriter) {
                     checkFile();
-                    Log.v("LogConfig", Thread.currentThread().getName() + " : " + Thread.currentThread().getId());
+                    Log.v("TinyLogConfig", Thread.currentThread().getName() + " : " + Thread.currentThread().getId());
                     mPrintWriter.println(message);
                 }
             }
@@ -122,7 +122,7 @@ public class LogConfig implements ILogConfig {
         try {
             mPrintWriter = new PrintWriter(new FileWriter(mCurrentFile, true), true);
         } catch (IOException e) {
-            Log.e("LogConfig", "PrintWriter IOException");
+            Log.e("TinyLogConfig", "PrintWriter IOException");
             e.printStackTrace();
             throw new RuntimeException("[TinyLog Exception]: " + e.getMessage());
         }
@@ -130,7 +130,7 @@ public class LogConfig implements ILogConfig {
 
     private void checkFile() {
         long fileSizeM = (mCurrentFile.length() / 1024 / 1024);// convert to M bytes
-        Log.v("LogConfig", mCurrentFile.getName() + ", " + "file size: " + mCurrentFile.length() + " byte");
+        Log.v("TinyLogConfig", mCurrentFile.getName() + ", " + "file size: " + mCurrentFile.length() + " byte");
         if (fileSizeM >= mFileSize) {
             createFile();
         }

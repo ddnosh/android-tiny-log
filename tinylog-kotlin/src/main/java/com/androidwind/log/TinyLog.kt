@@ -20,15 +20,15 @@ object TinyLog {
     val LOG_W = 3
     val LOG_E = 4
 
-    private val mLogConfig: LogConfig by lazy { LogConfig() }
+    private val mLogConfig: TinyLogConfig by lazy { TinyLogConfig() }
 
-    fun config(): LogConfig {
+    fun config(): TinyLogConfig {
         return mLogConfig
     }
 
     private fun preCheck() {
         if (mLogConfig == null) {
-            throw RuntimeException("[TinyLog Exception]: You should initialize LogConfig first, such as \"Tiny.config()\".")
+            throw RuntimeException("[TinyLog Exception]: You should initialize TinyLogConfig first, such as \"Tiny.config()\".")
         }
         if (!mLogConfig.isEnable) return
     }
@@ -177,7 +177,7 @@ object TinyLog {
         logContent = generateContent(content, *args)
         if (mLogConfig.mKey != null && "" != mLogConfig.mKey) {
             try {
-                logContent = LogUtil.encrypt(mLogConfig.mKey!!, logContent)
+                logContent = TinyLogUtil.encrypt(mLogConfig.mKey!!, logContent)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -200,7 +200,7 @@ object TinyLog {
         var content = content
         if (mLogConfig.mKey != null && "" != mLogConfig.mKey) {
             try {
-                content = LogUtil.encrypt(mLogConfig.mKey!!, content!!)
+                content = TinyLogUtil.encrypt(mLogConfig.mKey!!, content!!)
             } catch (e: Exception) {
                 e.printStackTrace()
             }

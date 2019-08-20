@@ -11,13 +11,13 @@ import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 /**
- * ILogConfig's implementation class
+ * ITinyLogConfig's implementation class
  * we should use TinyLog.config() when app initialized
  *
  * @author  ddnosh
  * @website http://blog.csdn.net/ddnosh
  */
-class LogConfig : ILogConfig {
+class TinyLogConfig : ITinyLogConfig {
     var isEnable: Boolean = false
     var isWritable: Boolean = false;
     var mLogPath: String? = null
@@ -33,22 +33,22 @@ class LogConfig : ILogConfig {
         var executor: ExecutorService? = null
     }
 
-    override fun setEnable(isEnable: Boolean): ILogConfig {
+    override fun setEnable(isEnable: Boolean): ITinyLogConfig {
         this.isEnable = isEnable
         return this
     }
 
-    override fun setWritable(writable: Boolean): ILogConfig {
+    override fun setWritable(writable: Boolean): ITinyLogConfig {
         this.isWritable = writable
         return this
     }
 
-    override fun setLogPath(logPath: String): ILogConfig {
+    override fun setLogPath(logPath: String): ITinyLogConfig {
         this.mLogPath = logPath
         return this
     }
 
-    override fun setFileSize(fileSize: Int): ILogConfig {
+    override fun setFileSize(fileSize: Int): ITinyLogConfig {
         if (fileSize < 1) {
             this.mFileSize = 1
         }
@@ -56,17 +56,17 @@ class LogConfig : ILogConfig {
         return this
     }
 
-    override fun setLogCallBack(callBack: LogConfig.LogCallBack): ILogConfig {
+    override fun setLogCallBack(callBack: TinyLogConfig.LogCallBack): ITinyLogConfig {
         this.mLogCallBack = callBack
         return this
     }
 
-    override fun setEncrypt(key: String): ILogConfig {
+    override fun setEncrypt(key: String): ITinyLogConfig {
         this.mKey = key
         return this
     }
 
-    override fun setLogLevel(level: Int): ILogConfig {
+    override fun setLogLevel(level: Int): ITinyLogConfig {
         this.logLevel = level
         return this
     }
@@ -75,7 +75,7 @@ class LogConfig : ILogConfig {
         if (!isWritable)
             return
         if (mLogPath == null)
-            mLogPath = LogUtil.logDir
+            mLogPath = TinyLogUtil.logDir
         val dir: File = File(mLogPath)
         if (!dir.exists()) {
             dir.mkdirs()
@@ -88,7 +88,7 @@ class LogConfig : ILogConfig {
         executor?.execute(Runnable {
             synchronized(mPrintWriter!!) {
                 checkFile()
-                Log.v("LogConfig", Thread.currentThread().name + " : " + Thread.currentThread().id)
+                Log.v("TinyLogConfig", Thread.currentThread().name + " : " + Thread.currentThread().id)
                 mPrintWriter!!.println(message)
             }
         })
@@ -101,7 +101,7 @@ class LogConfig : ILogConfig {
         try {
             mPrintWriter = PrintWriter(FileWriter(mCurrentFile, true), true)
         } catch (e: IOException) {
-            Log.e("LogConfig", "PrintWriter IOException")
+            Log.e("TinyLogConfig", "PrintWriter IOException")
             e.printStackTrace()
             throw RuntimeException("[TinyLog Exception]: " + e.message)
         }
@@ -109,7 +109,7 @@ class LogConfig : ILogConfig {
 
     private fun checkFile() {
         val fileSizeM = mCurrentFile!!.length() / 1024 / 1024// convert to M bytes
-        Log.v("LogConfig", mCurrentFile!!.name + ", " + "file size: " + mCurrentFile!!.length() + " byte")
+        Log.v("TinyLogConfig", mCurrentFile!!.name + ", " + "file size: " + mCurrentFile!!.length() + " byte")
         if (fileSizeM >= mFileSize) {
             createFile()
         }

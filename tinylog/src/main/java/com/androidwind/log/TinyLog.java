@@ -20,25 +20,25 @@ public class TinyLog {
     public static final int LOG_W = 3;
     public static final int LOG_E = 4;
 
-    private static LogConfig mLogConfig;
+    private static TinyLogConfig sMTinyLogConfig;
 
-    public static LogConfig config() {
-        if (mLogConfig == null) {
-            mLogConfig = new LogConfig();
+    public static TinyLogConfig config() {
+        if (sMTinyLogConfig == null) {
+            sMTinyLogConfig = new TinyLogConfig();
         }
-        return mLogConfig;
+        return sMTinyLogConfig;
     }
 
     private static void preCheck() {
-        if (mLogConfig == null) {
-            throw new RuntimeException("[TinyLog Exception]: You should initialize LogConfig first, such as \"Tiny.config()\".");
+        if (sMTinyLogConfig == null) {
+            throw new RuntimeException("[TinyLog Exception]: You should initialize TinyLogConfig first, such as \"Tiny.config()\".");
         }
-        if (!mLogConfig.isEnable) return;
+        if (!sMTinyLogConfig.isEnable) return;
     }
 
     public static void v(String content) {
         preCheck();
-        if (mLogConfig.isWritable) {
+        if (sMTinyLogConfig.isWritable) {
             logFile(LOG_V, null, content, null);
         }
         logConsole(LOG_V, null, content, null);
@@ -46,7 +46,7 @@ public class TinyLog {
 
     public static void v(String tag, String content, Object... objects) {
         preCheck();
-        if (mLogConfig.isWritable) {
+        if (sMTinyLogConfig.isWritable) {
             logFile(LOG_V, tag, content, null, objects);
         }
         logConsole(LOG_V, tag, content, null, objects);
@@ -54,7 +54,7 @@ public class TinyLog {
 
     public static void d(String content) {
         preCheck();
-        if (mLogConfig.isWritable) {
+        if (sMTinyLogConfig.isWritable) {
             logFile(LOG_D, null, content, null);
         }
         logConsole(LOG_D, null, content, null);
@@ -62,7 +62,7 @@ public class TinyLog {
 
     public static void d(String tag, String content, Object... objects) {
         preCheck();
-        if (mLogConfig.isWritable) {
+        if (sMTinyLogConfig.isWritable) {
             logFile(LOG_D, tag, content, null, objects);
         }
         logConsole(LOG_D, tag, content, null, objects);
@@ -70,7 +70,7 @@ public class TinyLog {
 
     public static void i(String content) {
         preCheck();
-        if (mLogConfig.isWritable) {
+        if (sMTinyLogConfig.isWritable) {
             logFile(LOG_I, null, content, null);
         }
         logConsole(LOG_I, null, content, null);
@@ -78,7 +78,7 @@ public class TinyLog {
 
     public static void i(String tag, String content, Object... objects) {
         preCheck();
-        if (mLogConfig.isWritable) {
+        if (sMTinyLogConfig.isWritable) {
             logFile(LOG_I, tag, content, null, objects);
         }
         logConsole(LOG_I, tag, content, null, objects);
@@ -86,7 +86,7 @@ public class TinyLog {
 
     public static void w(String content) {
         preCheck();
-        if (mLogConfig.isWritable) {
+        if (sMTinyLogConfig.isWritable) {
             logFile(LOG_W, null, content, null);
         }
         logConsole(LOG_W, null, content, null);
@@ -94,7 +94,7 @@ public class TinyLog {
 
     public static void w(String tag, String content, Object... objects) {
         preCheck();
-        if (mLogConfig.isWritable) {
+        if (sMTinyLogConfig.isWritable) {
             logFile(LOG_W, tag, content, null, objects);
         }
         logConsole(LOG_W, tag, content, null, objects);
@@ -102,7 +102,7 @@ public class TinyLog {
 
     public static void e(String content) {
         preCheck();
-        if (mLogConfig.isWritable) {
+        if (sMTinyLogConfig.isWritable) {
             logFile(LOG_E, null, content, null);
         }
         logConsole(LOG_E, null, content, null);
@@ -110,7 +110,7 @@ public class TinyLog {
 
     public static void e(String content, Throwable t, Object... objects) {
         preCheck();
-        if (mLogConfig.isWritable) {
+        if (sMTinyLogConfig.isWritable) {
             logFile(LOG_E, null, content, t, objects);
         }
         logConsole(LOG_E, null, content, t, objects);
@@ -118,7 +118,7 @@ public class TinyLog {
 
     public static void e(String tag, String content, Object... objects) {
         preCheck();
-        if (mLogConfig.isWritable) {
+        if (sMTinyLogConfig.isWritable) {
             logFile(LOG_E, tag, content, null, objects);
         }
         logConsole(LOG_E, tag, content, null, objects);
@@ -127,7 +127,7 @@ public class TinyLog {
 
     public static void e(String tag, String content, Throwable t, Object... objects) {
         preCheck();
-        if (mLogConfig.isWritable) {
+        if (sMTinyLogConfig.isWritable) {
             logFile(LOG_E, tag, content, t, objects);
         }
         logConsole(LOG_E, tag, content, t, objects);
@@ -171,21 +171,21 @@ public class TinyLog {
     }
 
     private static void logConsole(int logSupport, String tag, String content, Throwable tr, Object... args) {
-        if (logSupport < mLogConfig.logLevel) {
+        if (logSupport < sMTinyLogConfig.logLevel) {
             return;
         }
         String logTag, logContent;
         logTag = generateTag(tag);
         logContent = generateContent(content, args);
-        if (mLogConfig.mKey != null && !"".equals(mLogConfig.mKey)) {
+        if (sMTinyLogConfig.mKey != null && !"".equals(sMTinyLogConfig.mKey)) {
             try {
-                logContent = LogUtil.encrypt(mLogConfig.mKey, logContent);
+                logContent = TinyLogUtil.encrypt(sMTinyLogConfig.mKey, logContent);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        if (mLogConfig.mLogCallBack != null) {
-            mLogConfig.mLogCallBack.getLogString(logTag, logContent);
+        if (sMTinyLogConfig.mLogCallBack != null) {
+            sMTinyLogConfig.mLogCallBack.getLogString(logTag, logContent);
         }
         switch (logSupport) {
             case LOG_V:
@@ -210,12 +210,12 @@ public class TinyLog {
     }
 
     private static void logFile(int logSupport, String tag, String content, Throwable tr, Object... args) {
-        if (logSupport < mLogConfig.logLevel) {
+        if (logSupport < sMTinyLogConfig.logLevel) {
             return;
         }
-        if (mLogConfig.mKey != null && !"".equals(mLogConfig.mKey)) {
+        if (sMTinyLogConfig.mKey != null && !"".equals(sMTinyLogConfig.mKey)) {
             try {
-                content = LogUtil.encrypt(mLogConfig.mKey, content);
+                content = TinyLogUtil.encrypt(sMTinyLogConfig.mKey, content);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -252,6 +252,6 @@ public class TinyLog {
                 + "" + android.os.Process.myPid() + "|" + Thread.currentThread().getId()
                 + " [" + callerClazzName + "->" + caller.getMethodName() + "]"
                 + " [" + generateTag(tag) + "]" + generateContent(content, args) + error;
-        mLogConfig.saveToFile(message);
+        sMTinyLogConfig.saveToFile(message);
     }
 }

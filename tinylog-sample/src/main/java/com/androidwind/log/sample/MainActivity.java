@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.androidwind.log.LogConfig;
+import com.androidwind.log.TinyLogConfig;
 import com.androidwind.log.TinyLog;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private LogConfig.LogCallBack mLogCallBack = new LogConfig.LogCallBack() {
+    private TinyLogConfig.LogCallBack mLogCallBack = new TinyLogConfig.LogCallBack() {
         @Override
         public void getLogString(String tag, String content) {
             mStringBuilder.append(tag + " -----------> " + content).append("\n");

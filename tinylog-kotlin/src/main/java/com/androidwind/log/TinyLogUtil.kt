@@ -16,7 +16,7 @@ import javax.crypto.spec.SecretKeySpec
  * @author ddnosh
  * @website http://blog.csdn.net/ddnosh
  */
-object LogUtil {
+object TinyLogUtil {
 
     val logDir: String
         get() = if (Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED) {
