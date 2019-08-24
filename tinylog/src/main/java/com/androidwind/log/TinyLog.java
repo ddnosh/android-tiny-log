@@ -34,6 +34,12 @@ public class TinyLog {
             throw new RuntimeException("[TinyLog Exception]: You should initialize TinyLogConfig first, such as \"Tiny.config()\".");
         }
         if (!sMTinyLogConfig.isEnable) return;
+        if (sMTinyLogConfig.isWritable) {
+            if (!sMTinyLogConfig.writeCheck) {
+                sMTinyLogConfig.apply();
+                sMTinyLogConfig.writeCheck = true;
+            }
+        }
     }
 
     public static void v(String content) {

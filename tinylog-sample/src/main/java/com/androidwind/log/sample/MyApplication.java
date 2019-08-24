@@ -20,15 +20,15 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         application = this;
-        // TinyLog.config().setEnable(BuildConfig.DEBUG).setWritable(true).setLogPath(getLogDir()).setFileSize(1).apply();
+        // TinyLog.config().setEnable(BuildConfig.DEBUG).setWritable(true).setLogPath(getLogDir()).setFileSize(1);
         //encrypt
-        // TinyLog.config().setEnable(BuildConfig.DEBUG).setWritable(true).setLogPath(getLogDir()).setFileSize(1).setEncrypt("1234567812345678").apply();
+        // TinyLog.config().setEnable(BuildConfig.DEBUG).setWritable(true).setLogPath(getLogDir()).setFileSize(1).setEncrypt("1234567812345678");
         //logLevel
-        TinyLog.config().setEnable(BuildConfig.DEBUG).setWritable(true).setLogPath(getLogDir()).setFileSize(1).setLogLevel(TinyLog.LOG_I).apply();
-        TinyLog.v("this is tinylog");
+        TinyLog.config().setEnable(BuildConfig.DEBUG).setWritable(true).setLogPath(getLogDir()).setFileSize(1).setLogLevel(TinyLog.LOG_I);
+        // TinyLog.v("this is tinylog");
     }
 
-    private String getLogDir() {
+    public String getLogDir() {
         String logDir;
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
             logDir = Environment.getExternalStorageDirectory().getPath();

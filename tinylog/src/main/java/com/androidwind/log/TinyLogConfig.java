@@ -38,6 +38,7 @@ public class TinyLogConfig implements ITinyLogConfig {
     String mKey;
     //output log level when >= logLevel
     int logLevel = TinyLog.LOG_V;
+    boolean writeCheck;
 
     private static ExecutorService executor;
 
@@ -101,6 +102,8 @@ public class TinyLogConfig implements ITinyLogConfig {
         createFile();
 
         executor = Executors.newSingleThreadExecutor(); //file operation should use single thread pool
+
+        writeCheck = true;
     }
 
     public void saveToFile(final String message) {

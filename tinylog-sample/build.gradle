@@ -33,4 +33,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
     implementation project(':tinylog')
+
+    //TinyPermission
+    api 'com.androidwind:tinypermission:1.0.0'
 }

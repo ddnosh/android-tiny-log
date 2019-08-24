@@ -8,9 +8,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.androidwind.log.TinyLogConfig;
 import com.androidwind.log.TinyLog;
+import com.androidwind.permission.OnPermission;
+import com.androidwind.permission.Permission;
+import com.androidwind.permission.TinyPermission;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -24,6 +30,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        handlePermission();
+
         Button btn1 = findViewById(R.id.btn_click_once);
         btn1.setOnClickListener(this);
         Button btn2 = findViewById(R.id.btn_click_more);
@@ -35,6 +43,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         TinyLog.config().setLogCallBack(mLogCallBack);
         mStringBuilder = new StringBuilder();
+    }
+
+    private void handlePermission() {
+        //permission
+        TinyPermission.start(this)
+                .permission(Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE)
+                .request(new OnPermission() {
+
+                    @Override
+                    public void hasPermission(List<String> granted, boolean isAll) {
+
+                    }
+
+                    @Override
+                    public void noPermission(List<String> denied, boolean permanent) {
+                        TinyLog.config()
+                                .setEnable(BuildConfig.DEBUG).setWritable(false).setLogLevel(TinyLog.LOG_I);
+                    }
+                });
     }
 
     private void printLog() {
@@ -74,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 @Override
                 public void run() {
                     //test
-                    for (int i = 0; i < times; i++){
+                    for (int i = 0; i < times; i++) {
                         printLog();
                     }
                 }
