@@ -22,7 +22,7 @@ public class TinyLog {
 
     private static TinyLogConfig sMTinyLogConfig;
 
-    public static TinyLogConfig config() {
+    public static synchronized TinyLogConfig config() {
         if (sMTinyLogConfig == null) {
             sMTinyLogConfig = new TinyLogConfig();
         }
