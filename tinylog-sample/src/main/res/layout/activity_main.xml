@@ -38,10 +38,18 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/btn_clear"
+        android:id="@+id/btn_multiple_threads"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/ll_click_more"
+        android:textAllCaps="false"
+        android:text="click to use multiple threads" />
+
+    <Button
+        android:id="@+id/btn_clear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_multiple_threads"
         android:textAllCaps="false"
         android:text="clear log" />
 

@@ -38,6 +38,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn2.setOnClickListener(this);
         Button btn3 = findViewById(R.id.btn_clear);
         btn3.setOnClickListener(this);
+        Button btn4 = findViewById(R.id.btn_multiple_threads);
+        btn4.setOnClickListener(this);
         result = findViewById(R.id.tv_output);
         result.setMovementMethod(ScrollingMovementMethod.getInstance());
 
@@ -106,6 +108,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 }
             }).start();
+        } else if (v.getId() == R.id.btn_multiple_threads) {
+            mStringBuilder.delete(0, mStringBuilder.length());
+            result.setText(mStringBuilder.toString());
+
+            for (int i = 0; i < 100; i++) {
+                final int temp = i;
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        TinyLog.i("this is tinylog" + temp);
+                    }
+                }).start();
+            }
         } else if (v.getId() == R.id.btn_clear) {
             mStringBuilder.delete(0, mStringBuilder.length());
             result.setText(mStringBuilder.toString());
