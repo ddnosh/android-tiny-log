@@ -20,11 +20,15 @@ public class TinyLog {
     public static final int LOG_W = 3;
     public static final int LOG_E = 4;
 
-    private static TinyLogConfig sMTinyLogConfig;
+    private static volatile TinyLogConfig sMTinyLogConfig;
 
-    public static synchronized TinyLogConfig config() {
+    public static TinyLogConfig config() {
         if (sMTinyLogConfig == null) {
-            sMTinyLogConfig = new TinyLogConfig();
+            synchronized (TinyLogConfig.class) {
+                if (sMTinyLogConfig == null) {
+                    sMTinyLogConfig = new TinyLogConfig();
+                }
+            }
         }
         return sMTinyLogConfig;
     }
